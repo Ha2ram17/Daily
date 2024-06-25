@@ -1,6 +1,7 @@
 package haeram;
 
 import java.util.*;
+import java.io.*;
 
 public class main {
 
@@ -17,21 +18,21 @@ public class main {
 	            return false;
 	        } else {
 	            System.out.println("잘못된 입력입니다. 다시 입력해주세요.");
+	            System.out.println();
 	            return selectMode(sc); // 재귀 호출
 	        }
 	    }
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
+		Market m1= new Market();
 		Scanner sc = new Scanner(System.in);
 		boolean Clint;
-		Market m1 = new Market("사과",1450,30);
 		Clint=selectMode(sc);
 		if(Clint==false) {
-			//System.out.println("1. 판매물품 등록\n2. 재고관리\n3. 상점소개문구 수정");
-			//위를 메소드화
+			m1.첫번째상점명세팅();
+			m1.판매자메뉴();
 		}
 		else if(Clint==true) {
-			//System.out.println("1. 상품목록 열기\n2. 마켓머니 확인\n3. 네고요청 확인");
-			//위를 메소드화
+			//m1.구매자메뉴();
 		}
 		
 	}
