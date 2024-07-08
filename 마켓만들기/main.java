@@ -28,7 +28,6 @@ public class main {
 		boolean Clint;
 		Clint=selectMode(sc);
 		if(Clint==false) {
-			m1.첫번째구매자세팅();
 			m1.판매자메뉴();
 		}
 		else if(Clint==true) {
