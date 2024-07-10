@@ -45,6 +45,42 @@ public class Market {
 		String 임시 = sc.next();
 	}
 	//-------------------------
+	void 상품이름확인절차(String i) throws IOException {
+		System.out.printf("상품 가격을 '%s'로 결정하시겠습니까?\n확인 : 1\n취소 : 2",i);
+		String 임시 = sc.next();
+		if("1".equals(임시)) {
+			System.out.println("확인되었습니다.");
+		}
+		else {
+			System.out.println("취소하셨습니다.");
+			판매물품등록();
+		}
+		
+	}
+	
+	void 상품가격확인절차(String i) throws IOException {
+		System.out.printf("상품 가격을 '%s'로 결정하시겠습니까?\n확인 : 1\n취소 : 2",i);
+		String 임시 = sc.next();
+		if("1".equals(임시)) {
+			System.out.println("확인되었습니다.");
+		}
+		else {
+			판매물품등록();
+		}
+		
+	}
+	void 상품재고확인절차(String i) throws IOException {
+		System.out.printf("상품 가격을 '%s'로 결정하시겠습니까?\n확인 : 1\n취소 : 2",i);
+		String 임시 = sc.next();
+		if("1".equals(임시)) {
+			System.out.println("확인되었습니다.");
+		}
+		else {
+			판매물품등록();
+		}
+		
+	}
+	//-------------------------
 	void 구매자임시프로세스() {
 		판매물품상점명[0] = "한결패밀리";
 		판매물품고유번호[0] = 0;
@@ -67,13 +103,23 @@ public class Market {
 		장바구니[0]="0709";
 	}
 	//-------------------------
-	public int 널카운트(String[] array) { //연택쌤 가르쳐주셔서 감사합니다 ㅎㅎ
+	public int 널카운트(String[] array) { //forEach문
 		  int count = 0;
 		  for (String element : array) {
 		    if (element != null) {
 		      count++;
 		    }
 		  }
+		  return count;
+		}
+	public int 고유번호추출널카운트(int[] array) { //forEach문
+		  int count = 0;
+		  for (int element : array) {
+		    if (element != 0) {
+		      count++;
+		    }
+		  }
+		  count++;
 		  return count;
 		}
 	
@@ -316,6 +362,9 @@ public class Market {
 			System.out.println("하이퍼마켓의 장바구니를 조회합니다.");
 			장바구니조회();
 		}
+		else if(select==5) {
+			판매물품등록();
+		}
 		else {
             System.out.println("잘못된 입력입니다. 다시 입력해주세요.");
             구매자메뉴(); // 재귀 호출하기
@@ -324,6 +373,7 @@ public class Market {
 	//------------------------------------------------------------- DOWN 판매자 메소드
 	}
 	void 첫번째상점명세팅() throws IOException {
+		구매자임시프로세스();
 		System.out.println("하이퍼마켓에 오신 것을 환영합니다.");
 		System.out.println("첫 접속이므로, 상점명을 입력해주세요.");
 		System.out.println("정하실 상점명을 입력해주세요.");
@@ -387,8 +437,22 @@ public class Market {
 	}
 	
 	void 판매물품등록() throws IOException {
-		
-	}
+		int indexselect = 고유번호추출널카운트(판매물품고유번호);
+		System.out.println("판매하실 물품의 이름을 입력해주세요.");
+		String 상품이름 = in.readLine();
+		상품이름확인절차(상품이름);
+		판매물품이름[indexselect]=상품이름;
+		System.out.println("물품의 판매하실 가격을 입력해주세요.");
+		String 상품가격 = in.readLine();
+		상품가격확인절차(상품가격);
+		판매물품가격[indexselect]=Integer.parseInt(상품가격);
+		System.out.println("물품의 재고 개수를 입력해주세요.");
+		String 상품재고 = in.readLine();
+		상품재고확인절차(상품재고);
+		판매물품재고개수[indexselect]=Integer.parseInt(상품재고);
+		판매물품상점명[indexselect] = 상점[0];
+		판매자메뉴(); //판매물품 출력시 문제가 생김. 수정할 것.
+		}
 	
 	void 판매자메뉴() throws IOException {
 		int pan;
@@ -397,8 +461,7 @@ public class Market {
 		System.out.println("1. 하이퍼마켓 판매물품 등록\n2. 하이퍼마켓 재고관리\n3. 하이퍼마켓 상점 관리");
 		int select = sc.nextInt();
 		if(select==1) {
-			System.out.println("등록할 판매물품의 이름을 입력해주세요.");
-			//미구현
+			판매물품등록();
 		}
 		else if(select==2) {
 			System.out.println("관리할 재고의 고유물품번호를 입력해주세요.");
@@ -431,7 +494,10 @@ public class Market {
 	            임시진행스탑();
 	            판매자메뉴(); // 재귀 호출하기
 	        }
-			
+		}
+		else if(select==9) {
+				System.out.println("구매자메뉴로 전환합니다.");
+				첫번째구매자세팅();
 		}
 		else {
             System.out.println("잘못된 입력입니다. 다시 입력해주세요.");
